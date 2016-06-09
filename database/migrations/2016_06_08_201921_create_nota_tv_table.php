@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNotaTvsTable extends Migration
+class CreateNotaTvTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateNotaTvsTable extends Migration
      */
     public function up()
     {
-        Schema::create('nota_tvs', function (Blueprint $table) {
+        Schema::create('nota_tv', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('nota_id');
             $table->integer('tv_id');
@@ -27,6 +27,6 @@ class CreateNotaTvsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('nota_tvs');
+        Schema::drop('nota_tv');
     }
 }

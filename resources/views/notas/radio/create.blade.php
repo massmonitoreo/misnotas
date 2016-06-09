@@ -2,7 +2,7 @@
 <a href="#">Nota de radio</a>
 <a href="#">Nota de televisión</a>
 <hr>
-<form action="{{ route('notas.store') }}" method="post">
+<form action="{{ route('notas.radio.store') }}" method="post">
   <input type="hidden" name="medio" value="Radio"><br>
 
   <label for="Encabezado">Encabezado:</label>

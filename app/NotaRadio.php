@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class NotaRadio extends Model
 {
-    public function nota() {
-        return $this->belongsTo(Nota::class);
-    }
+    protected $table = 'nota_radio';
+    // public function nota() {
+    //     return $this->belongsTo(Nota::class);
+    // }
 }

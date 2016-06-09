@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNotaRadiosTable extends Migration
+class CreateNotaRadioTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,10 @@ class CreateNotaRadiosTable extends Migration
      */
     public function up()
     {
-        Schema::create('nota_radios', function (Blueprint $table) {
+        Schema::create('nota_radio', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('nota_id');
-            $table->string('programa');
-            $table->string('conductor');
-            $table->string('estacion');
-            $table->string('horario');
-            $table->string('cobertura');
-            $table->string('comentario');
+            $table->integer('radio_id');
             $table->timestamps();
         });
     }
@@ -32,6 +27,6 @@ class CreateNotaRadiosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('nota_radios');
+        Schema::drop('nota_radio');
     }
 }

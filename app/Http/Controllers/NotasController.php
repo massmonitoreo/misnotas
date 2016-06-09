@@ -1,70 +1,68 @@
-<?php
-
-namespace App\Http\Controllers;
+<?php namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Radio;
+use App\Tv;
 use App\Nota;
 use App\NotaRadio;
+use App\NotaTv;
 use App\Http\Requests;
 
 class NotasController extends Controller
 {
     public function index()
     {
-      $data = [
-        'notas'     => Nota::all(),
-        'notaradios' => NotaRadio::all()
-      ];
-      
-        return view('notas.index', $data );
+        $data = [
+            'notas' => Nota::all(),
+            'tvs'   => Tv::all()
+        ];
+        return view('notas.index', $data);
     }
-
-    public function create()
+    public function createRadio()
     {
         $radios = Radio::all();
-        return view('notas.create', compact('radios'));
+        return view('notas.radio.create', compact('radios'));
     }
-
-    public function store(Request $request)
+    public function createTv()
     {
-      $nota             = new Nota;
-      $nota->encabezado = $request->get('encabezado');
-      $nota->sintesis   = $request->get('sintesis');
-      $nota->medio      = $request->get('medio');
-      if($nota->save()) {
-          $radio                 = Radio::find($request->get('fuente'));
-          $notaradio             = new NotaRadio;
-          $notaradio->nota_id    = $nota->id;
-          $notaradio->programa   = $radio->programa;
-          $notaradio->conductor  = $radio->conductor;
-          $notaradio->estacion   = $radio->estacion;
-          $notaradio->horario    = $radio->horario;
-          $notaradio->cobertura  = $radio->cobertura;
-          $notaradio->comentario = $radio->comentario;
-          if($notaradio->save()) {
-            return redirect()->route('notas.index');
-        }
+        $tvs = Tv::all();
+        return view('notas.tv.create', compact('tvs'));
     }
-}
+    public function storeRadio(Request $request)
+    {
+        if($request->get('medio') == 'Radio') {
+            $nota             = new Nota;
+            $nota->encabezado = $request->get('encabezado');
+            $nota->sintesis   = $request->get('sintesis');
+            $nota->medio      = $request->get('medio');
+            if($nota->save()) {
+                $nr           = new NotaRadio;
+                $nr->nota_id  = $nota->id; 
+                $nr->radio_id = $request->get('fuente');
+                if($nr->save()) {
+                    return redirect()->route('notas.index');
+                }
+            }
+        }
+        return redirect()->back()->withInputs($request->all());
+    }
 
-public function show($id)
-{
-        //
-}
-
-public function edit($id)
-{
-        //
-}
-
-public function update(Request $request, $id)
-{
-        //
-}
-
-public function destroy($id)
-{
-        //
-}
+    public function storeTv(Request $request) 
+    {
+        if($request->get('medio') == "Television") {
+            $nota             = new Nota;
+            $nota->encabezado = $request->get('encabezado');
+            $nota->sintesis   = $request->get('sintesis');
+            $nota->medio      = $request->get('medio');
+            if($nota->save()) {
+                $nt = new NotaTv;
+                $nt->nota_id = $nota->id;
+                $nt->tv_id = $request->get('fuente');
+                if($nt->save()) {
+                    return redirect()->route('notas.index');
+                }
+            }
+        }
+        return redirect()->back()->withInputs($request->all());
+    }
 }
